@@ -1,0 +1,137 @@
+{
+ "event": {
+  "event_ticker": "KXDHOUSEWON-26NOV03",
+  "markets": [
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL210",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 210,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.9800",
+    "yes_ask_dollars": "0.9900",
+    "last_price_dollars": "0.9900",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL214",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 214,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.9500",
+    "yes_ask_dollars": "0.9800",
+    "last_price_dollars": "0.9500",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL218",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 218,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.9300",
+    "yes_ask_dollars": "0.9400",
+    "last_price_dollars": "0.9300",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL222",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 222,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.9100",
+    "yes_ask_dollars": "0.9400",
+    "last_price_dollars": "0.9100",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL226",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 226,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.8800",
+    "yes_ask_dollars": "0.9000",
+    "last_price_dollars": "0.8900",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL230",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 230,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.8000",
+    "yes_ask_dollars": "0.8300",
+    "last_price_dollars": "0.8300",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL234",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 234,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.7100",
+    "yes_ask_dollars": "0.7400",
+    "last_price_dollars": "0.7300",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL238",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 238,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.6200",
+    "yes_ask_dollars": "0.6300",
+    "last_price_dollars": "0.6200",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL242",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 242,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.5100",
+    "yes_ask_dollars": "0.5200",
+    "last_price_dollars": "0.5200",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL246",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 246,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.4100",
+    "yes_ask_dollars": "0.4300",
+    "last_price_dollars": "0.4300",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL250",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 250,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.3500",
+    "yes_ask_dollars": "0.3600",
+    "last_price_dollars": "0.3800",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL254",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 254,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.2000",
+    "yes_ask_dollars": "0.2200",
+    "last_price_dollars": "0.2100",
+    "result": ""
+   },
+   {
+    "ticker": "KXDHOUSEWON-26NOV03-AL258",
+    "strike_type": "greater_or_equal",
+    "floor_strike": 258,
+    "cap_strike": null,
+    "yes_bid_dollars": "0.1200",
+    "yes_ask_dollars": "0.1300",
+    "last_price_dollars": "0.1200",
+    "result": ""
+   }
+  ]
+ }
+}

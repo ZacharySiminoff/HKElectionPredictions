@@ -1,0 +1,209 @@
+{
+ "slug": "alaska-senate-election-winner",
+ "volume": 2694233.284028,
+ "markets": [
+  {
+   "groupItemTitle": "Sen. Dan Sullivan",
+   "question": "Will Dan Sullivan win the Alaska Senate race in 2026?",
+   "outcomePrices": "[\"0.275\", \"0.725\"]",
+   "closed": false,
+   "volumeNum": 1109285.307913
+  },
+  {
+   "groupItemTitle": "Ann Diener",
+   "question": "Will Ann Diener win the Alaska Senate race in 2026?",
+   "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+   "closed": false,
+   "volumeNum": 39175.207578
+  },
+  {
+   "groupItemTitle": "Mary Peltola",
+   "question": "Will Mary Peltola win the Alaska Senate race in 2026?",
+   "outcomePrices": "[\"0.725\", \"0.275\"]",
+   "closed": false,
+   "volumeNum": 1489729.543704
+  },
+  {
+   "groupItemTitle": "Dustin Darden",
+   "question": "Will Dustin Darden win the Alaska Senate race in 2026?",
+   "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+   "closed": false,
+   "volumeNum": 25447.347312
+  },
+  {
+   "groupItemTitle": "Richard Grayson",
+   "question": "Will Richard Grayson win the Alaska Senate race in 2026?",
+   "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+   "closed": false,
+   "volumeNum": 25967.937521
+  },
+  {
+   "groupItemTitle": "Daniel J. Sullivan Jr.",
+   "question": "Will Daniel J. Sullivan Jr. win the Alaska Senate race in 2026?",
+   "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+   "closed": false,
+   "volumeNum": 1111
+  },
+  {
+   "groupItemTitle": "David Leslie",
+   "question": "Will David Leslie win the Alaska Senate race in 2026?",
+   "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+   "closed": false,
+   "volumeNum": 3516.9399999999996
+  },
+  {
+   "groupItemTitle": "Candidate C",
+   "question": "Will Candidate C win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate D",
+   "question": "Will Candidate D win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate E",
+   "question": "Will Candidate E win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate F",
+   "question": "Will Candidate F win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate G",
+   "question": "Will Candidate G win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate H",
+   "question": "Will Candidate H win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate I",
+   "question": "Will Candidate I win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate J",
+   "question": "Will Candidate J win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate K",
+   "question": "Will Candidate K win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate L",
+   "question": "Will Candidate L win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate M",
+   "question": "Will Candidate M win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate N",
+   "question": "Will Candidate N win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate O",
+   "question": "Will Candidate O win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate P",
+   "question": "Will Candidate P win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate Q",
+   "question": "Will Candidate Q win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate R",
+   "question": "Will Candidate R win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate S",
+   "question": "Will Candidate S win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate T",
+   "question": "Will Candidate T win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate U",
+   "question": "Will Candidate U win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate V",
+   "question": "Will Candidate V win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Candidate W",
+   "question": "Will Candidate W win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Other",
+   "question": "Will a candidate not listed above win the Alaska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  }
+ ]
+}

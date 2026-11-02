@@ -1,0 +1,97 @@
+{
+ "slug": "texas-senate-election-winner",
+ "volume": 11480613.597884001,
+ "markets": [
+  {
+   "groupItemTitle": "James Talarico (D)",
+   "question": "Will the Democrats win the Texas Senate race in 2026?",
+   "outcomePrices": "[\"0.755\", \"0.245\"]",
+   "closed": false,
+   "volumeNum": 4568805.193129
+  },
+  {
+   "groupItemTitle": "Ken Paxton (R)",
+   "question": "Will the Republicans win the Texas Senate race in 2026?",
+   "outcomePrices": "[\"0.245\", \"0.755\"]",
+   "closed": false,
+   "volumeNum": 6938056.993709
+  },
+  {
+   "groupItemTitle": "Person A",
+   "question": "Will Person A win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person B",
+   "question": "Will Person B win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person C",
+   "question": "Will Person C win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person D",
+   "question": "Will Person D win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person E",
+   "question": "Will Person E win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person F",
+   "question": "Will Person F win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person G",
+   "question": "Will Person G win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person H",
+   "question": "Will Person H win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person I",
+   "question": "Will Person I win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person J",
+   "question": "Will Person J win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Other",
+   "question": "Will a candidate not listed above win the Texas Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  }
+ ]
+}

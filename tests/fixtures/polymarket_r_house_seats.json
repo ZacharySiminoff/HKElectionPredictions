@@ -1,0 +1,76 @@
+{
+ "slug": "republican-house-seats-after-the-2026-midterm-elections",
+ "volume": 574591.4706110001,
+ "markets": [
+  {
+   "groupItemTitle": "Below 190",
+   "question": "Will the Republican Party hold below 190 House seats after the 2026 midterm elections?",
+   "outcomePrices": "[\"0.435\", \"0.565\"]",
+   "closed": false,
+   "volumeNum": 182421.15050600003
+  },
+  {
+   "groupItemTitle": "190-194",
+   "question": "Will the Republican Party hold between 190 and 194 House seats after the 2026 midterm elections?",
+   "outcomePrices": "[\"0.175\", \"0.825\"]",
+   "closed": false,
+   "volumeNum": 35932.99922600001
+  },
+  {
+   "groupItemTitle": "195-199",
+   "question": "Will the Republican Party hold between 195 and 199 House seats after the 2026 midterm elections?",
+   "outcomePrices": "[\"0.125\", \"0.875\"]",
+   "closed": false,
+   "volumeNum": 49809.474976000005
+  },
+  {
+   "groupItemTitle": "200-204",
+   "question": "Will the Republican Party hold between 200 and 204 House seats after the 2026 midterm elections?",
+   "outcomePrices": "[\"0.11\", \"0.89\"]",
+   "closed": false,
+   "volumeNum": 47673.530854
+  },
+  {
+   "groupItemTitle": "205-209",
+   "question": "Will the Republican Party hold between 205 and 209 House seats after the 2026 midterm elections?",
+   "outcomePrices": "[\"0.07\", \"0.93\"]",
+   "closed": false,
+   "volumeNum": 57422.95682400001
+  },
+  {
+   "groupItemTitle": "210-214",
+   "question": "Will the Republican Party hold between 210 and 214 House seats after the 2026 midterm elections?",
+   "outcomePrices": "[\"0.052\", \"0.948\"]",
+   "closed": false,
+   "volumeNum": 31379.774595000006
+  },
+  {
+   "groupItemTitle": "215-219",
+   "question": "Will the Republican Party hold between 215 and 219 House seats after the 2026 midterm elections?",
+   "outcomePrices": "[\"0.045\", \"0.955\"]",
+   "closed": false,
+   "volumeNum": 22021.839014999998
+  },
+  {
+   "groupItemTitle": "220-224",
+   "question": "Will the Republican Party hold between 220 and 224 House seats after the 2026 midterm elections?",
+   "outcomePrices": "[\"0.0265\", \"0.9735\"]",
+   "closed": false,
+   "volumeNum": 81195.974013
+  },
+  {
+   "groupItemTitle": "225-229",
+   "question": "Will the Republican Party hold between 225 and 229 House seats after the 2026 midterm elections?",
+   "outcomePrices": "[\"0.0055\", \"0.9945\"]",
+   "closed": false,
+   "volumeNum": 30076.525862999995
+  },
+  {
+   "groupItemTitle": "230+",
+   "question": "Will the Republican Party hold 230 or more House seats after the 2026 midterm elections?",
+   "outcomePrices": "[\"0.0045\", \"0.9955\"]",
+   "closed": false,
+   "volumeNum": 36657.244738999994
+  }
+ ]
+}

@@ -1,0 +1,97 @@
+{
+ "slug": "nebraska-senate-election-winner",
+ "volume": 2419744.6936830003,
+ "markets": [
+  {
+   "groupItemTitle": "Democrat",
+   "question": "Will the Democrats win the Nebraska Senate race in 2026?",
+   "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+   "closed": false,
+   "volumeNum": 121803.25643099999
+  },
+  {
+   "groupItemTitle": "Pete Ricketts (R)",
+   "question": "Will the Republicans win the Nebraska Senate race in 2026?",
+   "outcomePrices": "[\"0.715\", \"0.285\"]",
+   "closed": false,
+   "volumeNum": 1365052.929499
+  },
+  {
+   "groupItemTitle": "Independent",
+   "question": "Will an independent win the Nebraska Senate race in 2026?",
+   "outcomePrices": "[\"0.285\", \"0.715\"]",
+   "closed": false,
+   "volumeNum": 932889.896642
+  },
+  {
+   "groupItemTitle": "Person B",
+   "question": "Will Person B win the Nebraska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person C",
+   "question": "Will Person C win the Nebraska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person D",
+   "question": "Will Person D win the Nebraska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person E",
+   "question": "Will Person E win the Nebraska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person F",
+   "question": "Will Person F win the Nebraska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person G",
+   "question": "Will Person G win the Nebraska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person H",
+   "question": "Will Person H win the Nebraska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person I",
+   "question": "Will Person I win the Nebraska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Person J",
+   "question": "Will Person J win the Nebraska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  },
+  {
+   "groupItemTitle": "Other",
+   "question": "Will a candidate not listed above win the Nebraska Senate race in 2026?",
+   "outcomePrices": null,
+   "closed": false,
+   "volumeNum": 0
+  }
+ ]
+}
