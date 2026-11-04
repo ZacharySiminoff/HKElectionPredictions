@@ -380,3 +380,51 @@ def test_full_flow_submission_to_leaderboard(service, clock):
     table = predictions_table(service.participants(), service.races(), service.all_predictions())
     bob_row = next(row for row in table if row["Participant"] == "Bob")
     assert bob_row[HOUSE["title"]] == "—"
+
+
+# -- provisional market calls --------------------------------------------------
+
+
+class TestMarketCalls:
+    def setup_picks(self, service, fetcher, **odds):
+        fetcher.kwargs = {}
+        service.admin_refresh_polling(ADMIN, make_active=True)  # scoring: TX D 75%
+        person, _ = service.admin_create_participant(ADMIN, "Alice")
+        service.save_predictions(person["id"], {TX_SEN["id"]: "James Talarico (D)", NE_SEN["id"]: "Dan Osborn (I)"})
+        fetcher.kwargs = odds
+        service.admin_refresh_polling(ADMIN, make_active=False)  # live
+        return person
+
+    def test_called_races_count_provisionally_after_deadline(self, service, fetcher, clock):
+        self.setup_picks(service, fetcher, tx_dem=0.99, ne_ind=0.5)
+        assert service.effective_results() == {}  # never before the deadline
+        assert service.leaderboard()[0].points == 0
+
+        clock.now = DEADLINE
+        results = service.effective_results()
+        assert set(results) == {TX_SEN["id"]}
+        assert results[TX_SEN["id"]]["provisional"] is True
+        cell = service.leaderboard()[0].cells[TX_SEN["id"]]
+        assert cell.status == "correct" and cell.provisional
+        assert cell.points == pytest.approx(1 / 0.75)  # scored at the scoring snapshot's odds
+        assert service.results() == {}  # nothing written to the database
+
+    def test_below_threshold_or_number_race_not_called(self, service, fetcher, clock):
+        self.setup_picks(service, fetcher, tx_dem=0.97)
+        clock.now = DEADLINE
+        assert service.effective_results() == {}
+
+    def test_resolved_market_counts(self, service, fetcher, clock):
+        self.setup_picks(service, fetcher, tx_dem=0.6, resolved={TX_SEN["id"]: "Ken Paxton (R)"})
+        clock.now = DEADLINE
+        assert service.effective_results()[TX_SEN["id"]]["choice"] == "Ken Paxton (R)"
+        assert service.leaderboard()[0].cells[TX_SEN["id"]].status == "wrong"
+
+    def test_admin_result_overrides_market_call(self, service, fetcher, clock):
+        self.setup_picks(service, fetcher, tx_dem=0.99)
+        clock.now = DEADLINE
+        service.admin_set_result(ADMIN, TX_SEN["id"], "Ken Paxton (R)", confirmed=True)
+        result = service.effective_results()[TX_SEN["id"]]
+        assert result["choice"] == "Ken Paxton (R)" and not result.get("provisional")
+        cell = service.leaderboard()[0].cells[TX_SEN["id"]]
+        assert cell.status == "wrong" and not cell.provisional

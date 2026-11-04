@@ -329,7 +329,34 @@ class GameService:
         return self.store.list_predictions()
 
     def results(self) -> dict[str, dict]:
+        """Results recorded by an admin."""
         return {r["race_id"]: r for r in self.store.list_results()}
+
+    def effective_results(self, races: list[dict] | None = None,
+                          live: polling.Snapshot | None = None) -> dict[str, dict]:
+        """Admin results, plus provisional market calls for the other races.
+
+        After the deadline, a candidate race with no recorded result counts as
+        decided once the live market resolves or prices its leader at
+        MARKET_CALL_THRESHOLD or above. Those rows carry "provisional": True.
+        If the market later drops below the threshold the call disappears;
+        an admin-recorded result always wins.
+        """
+        results = self.results()
+        if not self.is_locked():
+            return results
+        live = live or self.live_snapshot()
+        if live is None:
+            return results
+        for race in races if races is not None else self.store.list_races():
+            if race["race_type"] != "winner" or race["id"] in results:
+                continue
+            call = live.called(race["id"], polling.MARKET_CALL_THRESHOLD)
+            if call:
+                leader, prob, resolved = call
+                results[race["id"]] = {"race_id": race["id"], "choice": leader, "numeric_value": None,
+                                       "provisional": True, "market_prob": prob, "resolved": resolved}
+        return results
 
     # -- polling snapshots ---------------------------------------------------
 
@@ -395,14 +422,16 @@ class GameService:
         return True
 
     def leaderboard(self) -> list[scoring.LeaderboardRow]:
-        """Live standings, available at all times."""
+        """Live standings, available at all times. Market calls count provisionally."""
+        races = self.store.list_races()
+        live = self.live_snapshot()
         return scoring.build_leaderboard(
             participants=self.store.list_participants(),
-            races=self.store.list_races(),
+            races=races,
             predictions=self.store.list_predictions(),
-            results=self.store.list_results(),
+            results=self.effective_results(races, live).values(),
             scoring_odds=self.scoring_snapshot(),
-            live_odds=self.live_snapshot(),
+            live_odds=live,
         )
 
     # -- participants --------------------------------------------------------

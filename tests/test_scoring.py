@@ -143,3 +143,13 @@ def test_random_pmfs_keep_ev_one():
         guess = rng.randint(215, 265)
         if all(prob_within(pmf, guess, k) >= scoring.MIN_PROB for k in scoring.SEAT_WINDOWS):
             assert number_expected(guess, pmf, pmf) == pytest.approx(1)
+
+
+def test_cells_carry_potential_points():
+    predictions = [pick("a", TX_SEN["id"], PAXTON), pick("a", HOUSE["id"], number=240)]
+    board = build_leaderboard([{"id": "a", "name": "Alice"}], TEST_RACES, predictions,
+                              [result(TX_SEN["id"], TALARICO)], SNAP, SNAP)
+    tx, house = board[0].cells[TX_SEN["id"]], board[0].cells[HOUSE["id"]]
+    assert tx.status == "wrong" and tx.potential == pytest.approx(1 / 0.25)
+    assert house.status == "pending"
+    assert house.potential == pytest.approx(number_points(240, 240, SNAP.pmf(HOUSE)))

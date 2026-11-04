@@ -16,7 +16,7 @@ import streamlit as st
 
 import scoring
 from database import GameError, GameService, SupabaseStore
-from polling import CALLED_THRESHOLD, pmf_mean, pmf_quantile, prob_within
+from polling import CALLED_THRESHOLD, MARKET_CALL_THRESHOLD, pmf_mean, pmf_quantile, prob_within
 from race_catalog import party_of, short_name
 
 SITE_NAME = "H.K's Election Prediction"
@@ -106,11 +106,13 @@ def show_flashes() -> None:
 
 try:
     service = get_service()
-except (KeyError, FileNotFoundError):
+except (KeyError, FileNotFoundError) as exc:
+    missing = exc.args[0] if isinstance(exc, KeyError) and exc.args else "the secrets file"
     st.error(
-        "Missing secrets. Copy `.streamlit/secrets.toml.example` to "
-        "`.streamlit/secrets.toml` and fill in your Supabase URL, service role key "
-        "and admin password. See README.md."
+        f"Missing secret: `{missing}`. The app needs `[supabase]` url and service_role_key, "
+        "and `[admin]` password. Locally, put them in `.streamlit/secrets.toml` (see "
+        "`.streamlit/secrets.toml.example`). On Streamlit Community Cloud, paste them into the "
+        "app's **Settings → Secrets**, including the `[section]` lines. See README.md."
     )
     st.stop()
 
@@ -196,6 +198,11 @@ STATUS_STYLE = {
     "scored_zero": "background-color: rgba(220, 38, 38, 0.40)",
     "none": "color: #9ca3af",
 }
+# Lighter versions for provisional market calls.
+PROVISIONAL_STYLE = {
+    "correct": "background-color: rgba(22, 163, 74, 0.22); font-weight: 600",
+    "wrong": "background-color: rgba(220, 38, 38, 0.20); text-decoration: line-through",
+}
 PENDING_TINT = {"D": "rgba(37, 99, 235, 0.16)", "R": "rgba(220, 38, 38, 0.16)", "I": "rgba(124, 58, 237, 0.18)"}
 
 
@@ -203,11 +210,14 @@ def cell_text(race: dict, cell: scoring.Cell) -> str:
     if cell.status == "none":
         return "—"
     pick = short_name(cell.pick) if race["race_type"] == "winner" else cell.pick
+    call = " (call)" if cell.provisional else ""
     if cell.status == "pending":
-        return f"{pick} · {cell.live_prob:.0%}" if cell.live_prob is not None else f"{pick}"
+        if cell.live_prob is not None:
+            return f"{pick} · {cell.potential:.2f} pts · {cell.live_prob:.0%}"
+        return f"{pick} · up to {cell.potential:.2f} pts"
     if cell.status == "wrong":
-        return f"✗ {pick}"
-    return f"✓ {pick} +{cell.points:.2f}" if cell.points > 0 else f"{pick} +0"
+        return f"✗ {pick} 0/{cell.potential:.2f}{call}"
+    return f"✓ {pick} +{cell.points:.2f}{call}" if cell.points > 0 else f"{pick} +0"
 
 
 def cell_style(race: dict, cell: scoring.Cell) -> str:
@@ -217,23 +227,76 @@ def cell_style(race: dict, cell: scoring.Cell) -> str:
         return ""
     if cell.status == "scored" and cell.points <= 0:
         return STATUS_STYLE["scored_zero"]
+    if cell.provisional:
+        return PROVISIONAL_STYLE.get(cell.status, "")
     return STATUS_STYLE.get(cell.status, "")
+
+
+def result_label(result: dict | None) -> str:
+    if not result:
+        return "Open"
+    value = scoring.display_value(result)
+    if result.get("provisional"):
+        how = "market resolved" if result.get("resolved") else f"market {result['market_prob']:.1%}"
+        return f"Called: {value} ({how})"
+    return f"Official: {value}"
+
+
+def points_table(scoring_snap, live_snap, results: dict) -> None:
+    """What a correct pick is worth in every race, with live odds and status."""
+    rows = []
+    for race in races:
+        if race["race_type"] != "winner":
+            continue
+        result = results.get(race["id"])
+        live = live_snap.probs(race["id"]) if live_snap else None
+        for option in race["options"]:
+            won = bool(result and result["choice"] == option)
+            rows.append({
+                "Race": race["short"] or race["title"],
+                "Candidate": option,
+                "Points if right": round(scoring.winner_points(race, option, scoring_snap), 2),
+                "Live chance": (live or {}).get(option),
+                "Status": ("✓ " + ("called" if result.get("provisional") else "official")) if won
+                          else ("✗" if result else ""),
+            })
+    st.dataframe(
+        pd.DataFrame(rows), hide_index=True, width="stretch",
+        column_config={
+            "Points if right": st.column_config.NumberColumn(format="%.2f"),
+            "Live chance": st.column_config.ProgressColumn(format="percent", min_value=0.0, max_value=1.0),
+        },
+        height=min(36 * (len(rows) + 1) + 4, 1400),
+    )
+    for race in races:
+        if race["race_type"] == "number":
+            pmf = scoring.race_pmf(race, scoring_snap)
+            lo = race["min_value"]
+            median = pmf_quantile(pmf, 0.5, lo)
+            st.caption(
+                f"**{race['title']}:** points depend on how close you are. An exact guess at the market median "
+                f"({median}) earns {scoring.number_points(median, median, pmf, lo):.2f} pts; guesses in less likely "
+                "ranges earn more if right. Each person's maximum is in their scoreboard cell."
+            )
 
 
 @st.fragment(run_every=60)
 def scoreboard() -> None:
     service.maybe_auto_refresh()
     board = service.leaderboard()
-    results = service.results()
     live_snap = service.live_snapshot()
+    scoring_snap = service.scoring_snapshot()
+    results = service.effective_results(races, live_snap)
     st.header("Live scoreboard")
     if not board:
         st.info("No participants yet.")
         return
 
-    decided = len(results)
+    official = sum(1 for r in results.values() if not r.get("provisional"))
+    called = len(results) - official
     c1, c2, c3 = st.columns(3)
-    c1.metric("Races decided", f"{decided} / {len(races)}")
+    c1.metric("Races decided", f"{len(results)} / {len(races)}",
+              f"{official} official · {called} market calls", delta_color="off")
     c2.metric("Leader", board[0].name, f"{board[0].points:.2f} pts", delta_color="off")
     best_projection = max(board, key=lambda r: r.projected)
     c3.metric("Projected leader", best_projection.name, f"{best_projection.projected:.2f} pts", delta_color="off")
@@ -253,8 +316,7 @@ def scoreboard() -> None:
     style_df = pd.DataFrame(style_rows, columns=text_df.columns)
     column_config = {}
     for race in races:
-        result = results.get(race["id"])
-        help_text = race["title"] + (f" — result: {scoring.display_value(result)}" if result else "")
+        help_text = f"{race['title']} — {result_label(results.get(race['id']))}"
         column_config[race["short"] or race["id"]] = st.column_config.TextColumn(help=help_text)
     st.dataframe(
         text_df.style.apply(lambda _: style_df, axis=None),
@@ -262,11 +324,16 @@ def scoreboard() -> None:
         height=min(38 * (len(text_df) + 1) + 4, 800),
     )
     st.caption(
-        "**Points** = confirmed results. **Projected** = points + expected points from undecided "
-        "races at the live odds. 🟩 right · 🟥 wrong · undecided cells are tinted by party and show the "
-        f"live chance the pick wins. Updates every minute. Live odds: "
-        f"{format_time(live_snap.fetched_at if live_snap else None, tz, True)}."
+        "**Points** = races decided so far. **Projected** = points + expected points from undecided "
+        "races at the live odds. 🟩 right · 🟥 wrong (shows what it would have paid) · lighter colours and "
+        f"\"(call)\" = the market has called it (≥{MARKET_CALL_THRESHOLD:.0%}) but it isn't official yet. "
+        "Undecided cells are tinted by party and show points if right and the live chance. "
+        f"Updates every minute. Live odds: {format_time(live_snap.fetched_at if live_snap else None, tz, True)}."
     )
+
+    st.subheader("Points per race")
+    points_table(scoring_snap, live_snap, results)
+
     with st.expander("How scoring works"):
         st.markdown(
             f"""
@@ -425,7 +492,7 @@ def page_group() -> None:
     predictions = service.all_predictions()
     scoring_snap = service.scoring_snapshot()
     live_snap = service.live_snapshot()
-    results = service.results()
+    results = service.effective_results(races, live_snap)
 
     rows = []
     disagreements = []
@@ -641,6 +708,11 @@ def admin_results(password: str) -> None:
     live = service.live_snapshot()
     st.caption(f"Market calls from the latest snapshot ({format_time(live.fetched_at if live else None, tz, True)}). "
                "Refresh odds first for the newest calls.")
+    st.info(
+        f"Races at ≥{MARKET_CALL_THRESHOLD:.0%} already count on the scoreboard as provisional "
+        "\"(call)\" results, updating with each snapshot. Recording a result here makes it official "
+        "and overrides the market — use that to confirm calls, or to correct a market call that's wrong."
+    )
     suggestions = {}
     for race in races:
         call = live.called(race["id"]) if live else None

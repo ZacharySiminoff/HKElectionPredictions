@@ -26,8 +26,11 @@ POLYMARKET_PAGE_URL = "https://polymarket.com/event/{slug}"
 KALSHI_EVENT_URL = "https://api.elections.kalshi.com/trade-api/v2/events/{ticker}"
 KALSHI_PAGE_URL = "https://kalshi.com/markets/{series}"
 
-# Market price at which a race is treated as "called" for result suggestions.
+# Market price at which a race is suggested to the admin as "called".
 CALLED_THRESHOLD = 0.97
+# Market price at which a race counts automatically (as a provisional result)
+# on the scoreboard, until an admin records the official result.
+MARKET_CALL_THRESHOLD = 0.98
 
 GetJson = Callable[[str], Any]
 
@@ -397,7 +400,7 @@ class Snapshot:
             self._pmf_cache[race["id"]] = seat_pmf(entry["survival"], race["min_value"], race["max_value"])
         return self._pmf_cache[race["id"]]
 
-    def called(self, race_id: str) -> tuple[str, float, bool] | None:
+    def called(self, race_id: str, threshold: float = CALLED_THRESHOLD) -> tuple[str, float, bool] | None:
         """(leader, probability, resolved) if the market has effectively decided."""
         probs = self.probs(race_id)
         if not probs:
@@ -406,6 +409,6 @@ class Snapshot:
         if resolved:
             return resolved, 1.0, True
         leader = max(probs, key=probs.get)
-        if probs[leader] >= CALLED_THRESHOLD:
+        if probs[leader] >= threshold:
             return leader, probs[leader], False
         return None

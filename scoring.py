@@ -116,6 +116,10 @@ class Cell:
     expected: float = 0.0
     # Live probability that the pick wins (winner races, pending only).
     live_prob: float | None = None
+    # Points the pick earns if right (winner) or if exactly right (number).
+    potential: float = 0.0
+    # True when the result is a market call that an admin hasn't confirmed.
+    provisional: bool = False
 
 
 @dataclass(frozen=True)
@@ -128,11 +132,20 @@ class LeaderboardRow:
     cells: dict[str, Cell] = field(default_factory=dict)
 
 
+def potential_points(race: dict, prediction: dict, odds: Snapshot | None) -> float:
+    """Points if the pick is right (winner) or exactly right (number)."""
+    if race["race_type"] == "winner":
+        return winner_points(race, prediction["choice"], odds)
+    guess = prediction["numeric_value"]
+    return number_points(guess, guess, race_pmf(race, odds), race["min_value"])
+
+
 def _cell(race: dict, prediction: dict | None, result: dict | None,
           scoring_odds: Snapshot | None, live_odds: Snapshot | None) -> Cell:
     if prediction is None:
         return Cell(pick=None, status="none")
     pick = display_value(prediction)
+    potential = potential_points(race, prediction, scoring_odds)
 
     if result is not None:
         points = score_prediction(race, prediction, result, scoring_odds)
@@ -140,17 +153,18 @@ def _cell(race: dict, prediction: dict | None, result: dict | None,
             status = "correct" if points > 0 else "wrong"
         else:
             status = "scored"
-        return Cell(pick=pick, status=status, points=points, expected=points)
+        return Cell(pick=pick, status=status, points=points, expected=points, potential=potential,
+                    provisional=bool(result.get("provisional")))
 
     live = live_odds or scoring_odds
     if race["race_type"] == "winner":
         q = win_prob(race, prediction["choice"], live)
-        return Cell(pick=pick, status="pending", live_prob=q,
+        return Cell(pick=pick, status="pending", live_prob=q, potential=potential,
                     expected=q * winner_points(race, prediction["choice"], scoring_odds))
     expected = number_expected(
         prediction["numeric_value"], race_pmf(race, scoring_odds), race_pmf(race, live), race["min_value"]
     )
-    return Cell(pick=pick, status="pending", expected=expected)
+    return Cell(pick=pick, status="pending", expected=expected, potential=potential)
 
 
 def build_leaderboard(
@@ -163,7 +177,8 @@ def build_leaderboard(
 ) -> list[LeaderboardRow]:
     """Live standings for everyone, at any time.
 
-    points    = points from races with a confirmed result
+    points    = points from races with a result (confirmed, or a provisional
+                market call if the result row has "provisional": True)
     projected = points + expected points from undecided races (live odds)
 
     Ranked by points, then projected; ties share a rank (1, 1, 3, ...).
